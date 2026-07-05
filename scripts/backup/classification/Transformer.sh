@@ -1,0 +1,212 @@
+export CUDA_VISIBLE_DEVICES=0
+
+model_name=Transformer
+
+python -u run.py \
+  --task_name classification \
+  --is_training 1 \
+  --root_path '/data2/lx/mental/preprocess/output' \
+  --model_id mental_classification \
+  --model $model_name \
+  --data Mental \
+  --features crop_clip \
+  --target depression\
+  --seq_len 128 \
+  --enc_in 64 \
+  --e_layers 3 \
+  --batch_size 16 \
+  --d_model 128 \
+  --d_ff 256 \
+  --top_k 3 \
+  --des 'Exp' \
+  --itr 1 \
+  --learning_rate 0.001 \
+  --train_epochs 100 \
+  --patience 10
+
+# features : 特征类型
+# target : 目标变量
+# seq_len : 时间序列长度
+# enc_in : 特征维度
+
+
+# python -u run.py \
+#   --task_name classification \
+#   --is_training 1 \
+#   --root_path ./dataset/EthanolConcentration/ \
+#   --model_id EthanolConcentration \
+#   --model $model_name \
+#   --data UEA \
+#   --e_layers 3 \
+#   --batch_size 16 \
+#   --d_model 128 \
+#   --d_ff 256 \
+#   --top_k 3 \
+#   --des 'Exp' \
+#   --itr 1 \
+#   --learning_rate 0.001 \
+#   --train_epochs 100 \
+#   --patience 10
+
+# python -u run.py \
+#   --task_name classification \
+#   --is_training 1 \
+#   --root_path ./dataset/FaceDetection/ \
+#   --model_id FaceDetection \
+#   --model $model_name \
+#   --data UEA \
+#   --e_layers 3 \
+#   --batch_size 16 \
+#   --d_model 128 \
+#   --d_ff 256 \
+#   --top_k 3 \
+#   --des 'Exp' \
+#   --itr 1 \
+#   --learning_rate 0.001 \
+#   --train_epochs 100 \
+#   --patience 10
+
+# python -u run.py \
+#   --task_name classification \
+#   --is_training 1 \
+#   --root_path ./dataset/Handwriting/ \
+#   --model_id Handwriting \
+#   --target depression\
+#   --model $model_name \
+#   --data UEA \
+#   --e_layers 3 \
+#   --batch_size 16 \
+#   --d_model 128 \
+#   --d_ff 256 \
+#   --top_k 3 \
+#   --des 'Exp' \
+#   --itr 1 \
+#   --learning_rate 0.001 \
+#   --train_epochs 100 \
+#   --patience 10
+
+# python -u run.py \
+#   --task_name classification \
+#   --is_training 1 \
+#   --root_path ./dataset/Heartbeat/ \
+#   --model_id Heartbeat \
+#   --model $model_name \
+#   --data UEA \
+#   --e_layers 3 \
+#   --batch_size 16 \
+#   --d_model 128 \
+#   --d_ff 256 \
+#   --top_k 3 \
+#   --des 'Exp' \
+#   --itr 1 \
+#   --learning_rate 0.001 \
+#   --train_epochs 100 \
+#   --patience 10
+
+# python -u run.py \
+#   --task_name classification \
+#   --is_training 1 \
+#   --root_path ./dataset/JapaneseVowels/ \
+#   --model_id JapaneseVowels \
+#   --model $model_name \
+#   --data UEA \
+#   --e_layers 3 \
+#   --batch_size 16 \
+#   --d_model 128 \
+#   --d_ff 256 \
+#   --top_k 3 \
+#   --des 'Exp' \
+#   --itr 1 \
+#   --learning_rate 0.001 \
+#   --train_epochs 100 \
+#   --patience 10
+
+# python -u run.py \
+#   --task_name classification \
+#   --is_training 1 \
+#   --root_path ./dataset/PEMS-SF/ \
+#   --model_id PEMS-SF \
+#   --model $model_name \
+#   --data UEA \
+#   --e_layers 3 \
+#   --batch_size 16 \
+#   --d_model 128 \
+#   --d_ff 256 \
+#   --top_k 3 \
+#   --des 'Exp' \
+#   --itr 1 \
+#   --learning_rate 0.001 \
+#   --train_epochs 100 \
+#   --patience 10
+
+# python -u run.py \
+#   --task_name classification \
+#   --is_training 1 \
+#   --root_path ./dataset/SelfRegulationSCP1/ \
+#   --model_id SelfRegulationSCP1 \
+#   --model $model_name \
+#   --data UEA \
+#   --e_layers 3 \
+#   --batch_size 16 \
+#   --d_model 128 \
+#   --d_ff 256 \
+#   --top_k 3 \
+#   --des 'Exp' \
+#   --itr 1 \
+#   --learning_rate 0.001 \
+#   --train_epochs 100 \
+#   --patience 10
+
+# python -u run.py \
+#   --task_name classification \
+#   --is_training 1 \
+#   --root_path ./dataset/SelfRegulationSCP2/ \
+#   --model_id SelfRegulationSCP2 \
+#   --model $model_name \
+#   --data UEA \
+#   --e_layers 3 \
+#   --batch_size 16 \
+#   --d_model 128 \
+#   --d_ff 256 \
+#   --top_k 3 \
+#   --des 'Exp' \
+#   --itr 1 \
+#   --learning_rate 0.001 \
+#   --train_epochs 100 \
+#   --patience 10
+
+# python -u run.py \
+#   --task_name classification \
+#   --is_training 1 \
+#   --root_path ./dataset/SpokenArabicDigits/ \
+#   --model_id SpokenArabicDigits \
+#   --model $model_name \
+#   --data UEA \
+#   --e_layers 3 \
+#   --batch_size 16 \
+#   --d_model 128 \
+#   --d_ff 256 \
+#   --top_k 3 \
+#   --des 'Exp' \
+#   --itr 1 \
+#   --learning_rate 0.001 \
+#   --train_epochs 100 \
+#   --patience 10
+
+# python -u run.py \
+#   --task_name classification \
+#   --is_training 1 \
+#   --root_path ./dataset/UWaveGestureLibrary/ \
+#   --model_id UWaveGestureLibrary \
+#   --model $model_name \
+#   --data UEA \
+#   --e_layers 3 \
+#   --batch_size 16 \
+#   --d_model 128 \
+#   --d_ff 256 \
+#   --top_k 3 \
+#   --des 'Exp' \
+#   --itr 1 \
+#   --learning_rate 0.001 \
+#   --train_epochs 100 \
+#   --patience 10
