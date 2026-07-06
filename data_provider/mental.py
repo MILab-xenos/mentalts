@@ -9,9 +9,6 @@ import matplotlib.pyplot as plt
 import os
 
 
-# 创建保存图像的目录
-os.makedirs('feature_heatmaps', exist_ok=True)
-
 class MentalLoader(Dataset):
     """
     Dataset class for the Mental Health dataset.
