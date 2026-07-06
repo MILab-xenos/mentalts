@@ -249,27 +249,29 @@ if __name__ == '__main__':
         arr = np.load(test_file)
         print(f"Shape: {arr.shape}\n")
 
-        # Best checkpoint per task (from coo.py results)
-        BEST_CKPTS = [
-            'checkpoints/classification_dep_cls_wobg_clip_seq256_enc64_lr0.0002_Informer_Mental_ftwobg_clip_sl256_ll48_pl0_dm128_nh8_el3_dl1_df256_expand2_dc4_fc1_ebtimeF_dtTrue_Exp_seq256_wobg_clip_lr0.0002_0',
-            'checkpoints/classification_anx_cls_wobg_clip_seq256_enc64_lr0.0002_Reformer_Mental_ftwobg_clip_sl256_ll48_pl0_dm128_nh8_el3_dl1_df256_expand2_dc4_fc1_ebtimeF_dtTrue_Exp_seq256_wobg_clip_lr0.0002_0',
-            'checkpoints/classification_sui_cls_wobg_clip_seq256_enc64_lr0.0002_FiLM_Mental_ftwobg_clip_sl256_ll48_pl0_dm128_nh8_el3_dl1_df256_expand2_dc4_fc1_ebtimeF_dtTrue_Exp_seq256_wobg_clip_lr0.0002_0',
-            'checkpoints/classification_ovr_cls_wobg_clip_seq256_enc64_lr0.0002_DLinear_Mental_ftwobg_clip_sl256_ll48_pl0_dm128_nh8_el3_dl1_df256_expand2_dc4_fc1_ebtimeF_dtTrue_Exp_seq256_wobg_clip_lr0.0002_0',
-        ]
+        # Load best checkpoint per task by macro_f1 from classification_summary.csv
+        SUMMARY_CSV = 'classification_summary.csv'
+        if not os.path.exists(SUMMARY_CSV):
+            print(f"ERROR: {SUMMARY_CSV} not found. Run `python coo.py` first.")
+            sys.exit(1)
 
-        TASK_LABELS = ['depression', 'anxiety', 'suiside', 'overall']
+        import pandas as pd
+        df = pd.read_csv(SUMMARY_CSV)
+        best_rows = df.loc[df.groupby('Target')['macro_f1'].idxmax()]
 
-        print("=" * 60)
-        print(f"{'Task':<12} {'Pred':<6} {'P(No)':<8} {'P(Yes)':<8} Model")
-        print("=" * 60)
-        for ckpt_dir, task in zip(BEST_CKPTS, TASK_LABELS):
+        print("=" * 70)
+        print(f"{'Task':<12} {'Pred':<6} {'P(No)':<8} {'P(Yes)':<8} {'Model':<16} macro_f1")
+        print("=" * 70)
+        for _, row in best_rows.iterrows():
+            task = row['Target']
+            ckpt_dir = os.path.join('checkpoints', row['Setting'])
             if not os.path.exists(os.path.join(ckpt_dir, 'checkpoint.pth')):
                 print(f"{task:<12} MISSING: {ckpt_dir}")
                 continue
             try:
                 model, margs = load_model(ckpt_dir, device)
                 pred, probs = infer_one(model, margs, arr, device)
-                print(f"{task:<12} {CLASS_NAMES[pred]:<6} {probs[0]:<8.3f} {probs[1]:<8.3f} {margs.model}")
+                print(f"{task:<12} {CLASS_NAMES[pred]:<6} {probs[0]:<8.3f} {probs[1]:<8.3f} {margs.model:<16} {row['macro_f1']:.4f}")
             except Exception as e:
                 print(f"{task:<12} ERROR: {e}")
-        print("=" * 60)
+        print("=" * 70)
